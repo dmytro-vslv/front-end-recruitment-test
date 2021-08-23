@@ -1,10 +1,12 @@
 @import "./bacon.scss";
+@import "./checkout.scss";
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
 
 html,
 body {
   background-color: #f7f8fa;
   font-family: "Poppins", sans-serif;
+  width: 100vw;
   height: 100vh;
   color: #46444c;
   position: relative;
@@ -23,6 +25,7 @@ body:before {
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 a {
@@ -30,13 +33,22 @@ a {
   text-decoration: none;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
 main {
-  max-width: 620px;
-  margin: auto;
-  height: 100vh;
-  padding: 0 30px;
-  align-items: center;
+  width: 100%;
+  min-height: 100%;
+  height: fit-content;
   display: flex;
+  align-items: center;
   justify-content: center;
 }
 
@@ -62,18 +74,6 @@ main ul {
 
 main img {
   max-width: 100%;
-}
-
-main li {
-  margin-bottom: 5px;
-  position: relative;
-  padding-left: 25px;
-}
-
-main li:before {
-  content: "—";
-  position: absolute;
-  left: 0;
 }
 
 main code {

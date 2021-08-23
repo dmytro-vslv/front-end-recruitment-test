@@ -1,0 +1,421 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap");
+
+// VARIABLES
+$error: #f44336;
+$success: #4caf50;
+$font-light: 400;
+$font-bold: 700;
+$font-extra-bold: 900;
+
+// MIXINS
+@mixin flexCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flexCenterBetween {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin absoluteAlignMiddle {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@mixin boxShadowBottom($color: rgba(0, 0, 0, 0.1)) {
+  box-shadow: inset 0 -2px $color;
+}
+
+@mixin roundedNumber($number) {
+  content: $number;
+  background-color: #000;
+  color: #fff;
+  font-size: 12px;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  @include flexCenter();
+  @include absoluteAlignMiddle();
+}
+
+@mixin pseudoImage($image, $bgSize: contain, $width, $height) {
+  content: "";
+  background-image: $image;
+  background-size: $bgSize;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: $width;
+  height: $height;
+}
+
+// CHECKOUT
+.checkout {
+  width: 100%;
+  max-width: 920px;
+  height: fit-content;
+  padding: 0 35px;
+  display: flex;
+  gap: 12px;
+  font-family: "Roboto", sans-serif;
+  @include flexCenter();
+
+  &__form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    flex: 0.7;
+  }
+
+  &__fieldset {
+    display: grid;
+    gap: 20px 10px;
+
+    &--personal {
+      grid-template-areas:
+        "title ."
+        "firstName lastName"
+        "email email"
+        "country postalCode"
+        "phone phone";
+    }
+
+    &--payments {
+      grid-template-areas:
+        "title ."
+        "creditCard creditCard"
+        "cvv expDate";
+    }
+  }
+
+  &__title {
+    width: fit-content;
+    font-weight: $font-extra-bold;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #000;
+    grid-area: title;
+    position: relative;
+
+    &--personal,
+    &--payments {
+      &::before {
+        left: -27px;
+      }
+    }
+
+    &--personal {
+      &::before {
+        @include roundedNumber("1");
+      }
+    }
+
+    &--payments {
+      &::before {
+        @include roundedNumber("2");
+      }
+
+      &::after {
+        @include pseudoImage(
+          $image: url("../../public/images/iconLock.png"),
+          $width: 11px,
+          $height: 11px
+        );
+        @include absoluteAlignMiddle();
+        right: -18px;
+        opacity: 0.7;
+      }
+    }
+  }
+
+  &__first-name {
+    grid-area: firstName;
+  }
+
+  &__last-name {
+    grid-area: lastName;
+  }
+
+  &__email {
+    grid-area: email;
+  }
+
+  &__country {
+    grid-area: country;
+  }
+
+  &__postal-code {
+    grid-area: postalCode;
+  }
+
+  &__phone {
+    grid-area: phone;
+  }
+
+  &__credit-card {
+    grid-area: creditCard;
+  }
+
+  &__cvv {
+    grid-area: cvv;
+  }
+
+  &__exp-date {
+    grid-area: expDate;
+  }
+
+  &__button {
+    cursor: pointer;
+    width: 100%;
+    background-color: #6bd400;
+    color: #fff;
+    font-weight: $font-bold;
+    font-family: inherit;
+    text-transform: uppercase;
+    outline: none;
+    border: none;
+    border-radius: 3px;
+    padding: 17px 0;
+    @include boxShadowBottom();
+    position: relative;
+
+    &::before {
+      @include pseudoImage(
+        $image: url("../../public/images/iconShoppingCart.png"),
+        $width: 17px,
+        $height: 17px
+      );
+      @include absoluteAlignMiddle();
+      transform: translate(-22px, -50%);
+    }
+  }
+
+  &__receipt {
+    width: 100%;
+    transform: translateY(-47%);
+    flex: 0.3;
+  }
+
+  &__message {
+    position: absolute;
+    top: 120px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+  }
+}
+
+// INPUT GROUP
+.input-group {
+  width: 100%;
+  height: 50px;
+  border-radius: 3px;
+  background-color: #fff;
+  @include boxShadowBottom();
+  position: relative;
+
+  &:focus-within:not(.input-group--error):not(.input-group--success) {
+    @include boxShadowBottom(rgba(0, 0, 0, 0.3));
+  }
+
+  &__label {
+    font-size: 12px;
+    font-weight: $font-extra-bold;
+    color: #3d3d3d;
+    position: absolute;
+    top: 5px;
+    left: 12px;
+  }
+
+  &__input,
+  &__select {
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: $font-light;
+    background-color: transparent;
+    color: #000;
+    outline: none;
+    border: none;
+    border-radius: inherit;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 25px 30px 5px 12px;
+
+    &::placeholder {
+      color: rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  &__select {
+    width: 95%;
+    height: 100%;
+    padding-top: 15px;
+    padding-left: 8px;
+  }
+
+  &__help {
+    @include absoluteAlignMiddle();
+    right: 7px;
+    width: 23px;
+    height: 23px;
+    opacity: 0.3;
+  }
+
+  &__error {
+    color: $error;
+    font-size: 10px;
+    position: absolute;
+    bottom: -15px;
+    left: 5px;
+  }
+
+  &--credit-card {
+    &::after {
+      @include pseudoImage(
+        $image: url("../../public/images/logoVisa.png"),
+        $bgSize: 75%,
+        $width: 40px,
+        $height: 45%
+      );
+      @include absoluteAlignMiddle();
+      right: 12px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 3px;
+    }
+  }
+
+  &--error,
+  &--success {
+    &:not(.checkout__credit-card):not(.checkout__cvv)::after {
+      @include absoluteAlignMiddle();
+      right: 10px;
+    }
+  }
+
+  &--error {
+    @include boxShadowBottom($error);
+    &:not(.checkout__country):not(.checkout__credit-card):not(.checkout__cvv)::after {
+      @include pseudoImage(
+        $image: url("../../public/images/iconErrorCircle.png"),
+        $width: 17px,
+        $height: 17px
+      );
+    }
+  }
+
+  &--success {
+    @include boxShadowBottom($success);
+    &:not(.checkout__country):not(.checkout__credit-card):not(.checkout__cvv)::after {
+      @include pseudoImage(
+        $image: url("../../public/images/iconCheckMark.png"),
+        $width: 15px,
+        $height: 15px
+      );
+    }
+  }
+}
+
+// RECEIPT
+.receipt {
+  background-color: #fff;
+  color: #000;
+  padding: 5px;
+  border-radius: 3px;
+  @include boxShadowBottom();
+
+  &__content {
+    border: 1px dotted rgba(0, 0, 0, 0.2);
+    padding: 15px 15px 35px 15px;
+    border-radius: inherit;
+  }
+
+  &__title {
+    font-size: 12px;
+    font-weight: $font-extra-bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 15px;
+  }
+
+  &__items {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 25px;
+  }
+
+  &__item {
+    @include flexCenterBetween();
+  }
+
+  &__item-title,
+  &__item-price {
+    font-size: 12px;
+    font-weight: $font-light;
+  }
+
+  &__summary {
+    border: 1px dashed rgba(0, 0, 0, 0.2);
+    border-left: none;
+    border-right: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 15px 0;
+    margin-bottom: 10px;
+  }
+
+  &__summary-item {
+    @include flexCenterBetween();
+  }
+
+  &__summary-title,
+  &__summary-price {
+    font-size: 12px;
+    font-weight: $font-light;
+  }
+
+  &__total {
+    @include flexCenterBetween();
+  }
+
+  &__total-title {
+    font-size: 12px;
+    font-weight: $font-extra-bold;
+  }
+
+  &__total-price {
+    font-size: 20px;
+    font-weight: $font-extra-bold;
+  }
+}
+
+// MEDIA QUERY
+@media only screen and (max-width: 760px) {
+  .checkout {
+    padding: 35px;
+    flex-direction: column;
+    gap: 15px;
+
+    &__form {
+      order: 2;
+      gap: 20px;
+    }
+
+    &__fieldset {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__receipt {
+      transform: initial;
+      order: 1;
+    }
+  }
+}

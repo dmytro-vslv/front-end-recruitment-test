@@ -1,0 +1,114 @@
+@layout('layouts/main')
+@set('title', 'Checkout')
+
+@section('body')
+  <div class="checkout">
+    {{--  FORM  --}}
+    <form class="checkout__form" id="form">
+      <div class="checkout__fieldset checkout__fieldset--personal">
+        <h2 class="checkout__title checkout__title--personal">Personal Information</h2>
+
+        <div class="checkout__first-name input-group input-group--success">
+          <label class="input-group__label" for="firstName">First name</label>
+          <input class="input-group__input" type="text" id="firstName" name="firstName" placeholder="Elon" value="Elon" autofocus />
+          <span class="input-group__error"></span>
+        </div>
+
+        <div class="checkout__last-name input-group input-group--error">
+          <label class="input-group__label" for="lastName">Last name</label>
+          <input class="input-group__input" type="text" id="lastName" name="lastName" placeholder="Musk" />
+          <span class="input-group__error">Last name cannot be empty</span>
+        </div>
+
+        <div class="checkout__email input-group">
+          <label class="input-group__label" for="email">Email</label>
+          <input class="input-group__input" type="text" id="email" name="email" placeholder="elon@spacex.com" />
+          <span class="input-group__error"></span>
+        </div>
+
+        <div class="checkout__country input-group">
+          <label class="input-group__label" for="country">Country</label>
+          <select class="input-group__select" id="country" name="country">
+            <option value="US" selected>United States</option>
+            <option value="GB">United Kingdom</option>
+            <option value="DE">Germany</option>
+            <option value="PL">Poland</option>
+          </select>
+        </div>
+
+        <div class="checkout__postal-code input-group">
+          <label class="input-group__label" for="postalCode">Postal Code</label>
+          <input class="input-group__input" type="number" id="postalCode" name="postalCode" placeholder="10001" />
+          <span class="input-group__error"></span>
+        </div>
+
+        <div class="checkout__phone input-group">
+          <label class="input-group__label" for="phone">Phone Number</label>
+          <input class="input-group__input" type="number" id="phone" name="phone" placeholder="(212) 692-93-92" />
+          <span class="input-group__error"></span>
+        </div>
+      </div>
+
+      <div class="checkout__fieldset checkout__fieldset--payments">
+        <h2 class="checkout__title checkout__title--payments">Payment Details</h2>
+
+        <div class="checkout__credit-card input-group input-group--credit-card">
+          <label class="input-group__label" for="creditCard">Credit Card Number</label>
+          <input class="input-group__input" type="number" id="creditCard" name="creditCard" placeholder="0000 - 0000 - 0000 - 0000" />
+          <span class="input-group__error"></span>
+        </div>
+
+        <div class="checkout__cvv input-group">
+          <label class="input-group__label" for="cvv">Security code</label>
+          <input class="input-group__input" type="password" id="cvv" name="CVV" placeholder="***" maxlength="3" />
+          <img class="input-group__help" src="./images/iconHelp.png" alt="Help" title="Three-digit verification number" />
+          <span class="input-group__error"></span>
+        </div>
+
+        <div class="checkout__exp-date input-group">
+          <label class="input-group__label" for="expDate">Expiration date</label>
+          <input class="input-group__input" type="number" id="expDate" name="expDate" placeholder="MM / YY" />
+          <span class="input-group__error"></span>
+        </div>
+      </div>
+
+      <button class="checkout__button" type="submit">Complete Purchase</button>
+    </form>
+
+    {{-- RECEIPT  --}}
+    <div class="checkout__receipt receipt">
+      <div class="receipt__content">
+        <div class="receipt__title">Your Order</div>
+
+        <ul class="receipt__items">
+          <li class="receipt__item">
+            <h4 class="receipt__item-title">Apple Watch Sport</h4>
+            <span class="receipt__item-price">$ 580</span>
+          </li>
+          <li class="receipt__item">
+            <h4 class="receipt__item-title">Modern Buckle</h4>
+            <span class="receipt__item-price">$ 380</span>
+          </li>
+        </ul>
+
+        <div class="receipt__summary">
+          <div class="receipt__summary-item">
+            <h4 class="receipt__summary-title">Total purchases</h4>
+            <span class="receipt__summary-price">$ 960.00</span>
+          </div>
+
+          <div class="receipt__summary-item">
+            <h4 class="receipt__summary-title">Estimated tax</h4>
+            <span class="receipt__summary-price">$ 0</span>
+          </div>
+        </div>
+
+        <div class="receipt__total">
+          <h4 class="receipt__total-title">Total</h4>
+          <span class="receipt__total-price">$ 960</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+@end
