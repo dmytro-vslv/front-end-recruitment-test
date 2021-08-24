@@ -8,16 +8,16 @@
       <div class="checkout__fieldset checkout__fieldset--personal">
         <h2 class="checkout__title checkout__title--personal">Personal Information</h2>
 
-        <div class="checkout__first-name input-group input-group--success">
+        <div class="checkout__first-name input-group">
           <label class="input-group__label" for="firstName">First name</label>
-          <input class="input-group__input" type="text" id="firstName" name="firstName" placeholder="Elon" value="Elon" autofocus />
+          <input class="input-group__input" type="text" id="firstName" name="firstName" placeholder="Elon" />
           <span class="input-group__error"></span>
         </div>
 
-        <div class="checkout__last-name input-group input-group--error">
+        <div class="checkout__last-name input-group">
           <label class="input-group__label" for="lastName">Last name</label>
           <input class="input-group__input" type="text" id="lastName" name="lastName" placeholder="Musk" />
-          <span class="input-group__error">Last name cannot be empty</span>
+          <span class="input-group__error"></span>
         </div>
 
         <div class="checkout__email input-group">
@@ -38,13 +38,13 @@
 
         <div class="checkout__postal-code input-group">
           <label class="input-group__label" for="postalCode">Postal Code</label>
-          <input class="input-group__input" type="number" id="postalCode" name="postalCode" placeholder="10001" />
+          <input class="input-group__input" type="text" id="postalCode" name="postalCode" placeholder="10001" />
           <span class="input-group__error"></span>
         </div>
 
         <div class="checkout__phone input-group">
           <label class="input-group__label" for="phone">Phone Number</label>
-          <input class="input-group__input" type="number" id="phone" name="phone" placeholder="(212) 692-93-92" />
+          <input class="input-group__input" type="tel" id="phone" name="phone" placeholder="(212) 692-93-92" />
           <span class="input-group__error"></span>
         </div>
       </div>
@@ -54,7 +54,7 @@
 
         <div class="checkout__credit-card input-group input-group--credit-card">
           <label class="input-group__label" for="creditCard">Credit Card Number</label>
-          <input class="input-group__input" type="number" id="creditCard" name="creditCard" placeholder="0000 - 0000 - 0000 - 0000" />
+          <input class="input-group__input" type="text" id="creditCard" name="creditCard" placeholder="0000 - 0000 - 0000 - 0000" />
           <span class="input-group__error"></span>
         </div>
 
@@ -67,7 +67,7 @@
 
         <div class="checkout__exp-date input-group">
           <label class="input-group__label" for="expDate">Expiration date</label>
-          <input class="input-group__input" type="number" id="expDate" name="expDate" placeholder="MM / YY" />
+          <input class="input-group__input" type="text" id="expDate" name="expDate" placeholder="MM / YY" />
           <span class="input-group__error"></span>
         </div>
       </div>
@@ -111,4 +111,280 @@
       </div>
     </div>
   </div>
+
+  <script>
+        
+    // VARIABLES
+    const form = document.getElementById("form");
+
+    const firstNameInput = document.getElementById("firstName");
+    const lastNameInput = document.getElementById("lastName");
+    const emailInput = document.getElementById("email");
+    const postalCodeInput = document.getElementById("postalCode");
+    const phoneInput = document.getElementById("phone");
+    const creditCardInput = document.getElementById("creditCard");
+    const cvvInput = document.getElementById("cvv");
+    const expDateInput = document.getElementById("expDate");
+
+    const inputsToValidate = [
+      firstNameInput,
+      lastNameInput,
+      emailInput,
+      postalCodeInput,
+      phoneInput,
+      creditCardInput,
+      cvvInput,
+      expDateInput,
+    ];
+
+
+    // DELAY INPUT VALIDATION
+    const debounce = (fn, delay = 1500) => {
+      let timeoutId;
+
+      return (...args) => {
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+        }
+        console.log(...args);
+        timeoutId = setTimeout(() => {
+          fn.apply(null, args);
+        }, delay);
+      };
+    };
+
+
+    // EVENT LISTENERS
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+
+      const isFirstNameValid = checkFirstName(),
+        isLastNameValid = checkLastName(),
+        isEmailValid = checkEmail(),
+        isPostalCodeValid = checkPostalCode(),
+        isPhoneValid = checkPhone(),
+        isCreditCardValid = checkCreditCard(),
+        isCVVValid = checkCVV(),
+        isExpDateValid = checkExpDate();
+
+      const isFormValid =
+        isFirstNameValid &&
+        isLastNameValid &&
+        isEmailValid &&
+        isPostalCodeValid &&
+        isPhoneValid &&
+        isCreditCardValid &&
+        isCVVValid &&
+        isExpDateValid;
+
+      if (isFormValid) {
+        console.log("Form submitted");
+      }
+    });
+
+    inputsToValidate.forEach(input =>
+      input.addEventListener(
+        "input",
+        debounce(e => {
+          switch (e.target.id) {
+            case "firstName":
+              checkFirstName();
+              break;
+
+            case "lastName":
+              checkLastName();
+              break;
+
+            case "email":
+              checkEmail();
+              break;
+
+            case "postalCode":
+              checkPostalCode();
+              break;
+
+            case "phone":
+              checkPhone();
+              break;
+
+            case "creditCard":
+              checkCreditCard();
+              break;
+
+            case "cvv":
+              checkCVV();
+              break;
+
+            case "expDate":
+              checkExpDate();
+              break;
+
+            default:
+              console.log("Unexpected input");
+          }
+        })
+      )
+    );
+
+
+    // INPUT VALIDATORS
+    const checkFirstName = () => {
+      let isValid = false;
+      const firstName = firstNameInput.value.trim();
+
+      if (isEmpty(firstName)) {
+        setError(firstNameInput, "First name cannot be empty");
+      } else {
+        setSuccess(firstNameInput);
+        isValid = true;
+      }
+
+      return isValid;
+    };
+
+    const checkLastName = () => {
+      let isValid = false;
+      const lastName = lastNameInput.value.trim();
+
+      if (isEmpty(lastName)) {
+        setError(lastNameInput, "Last name cannot be empty");
+      } else {
+        setSuccess(lastNameInput);
+        isValid = true;
+      }
+
+      return isValid;
+    };
+
+    const checkEmail = () => {
+      let isValid = false;
+      const email = emailInput.value.trim();
+      const regex =
+        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+      if (isEmpty(email)) {
+        setError(emailInput, "Email cannot be empty");
+      } else if (isNotValid(regex, email)) {
+        setError(emailInput, "Invalid syntax. Expected format: elon@spacex.com");
+      } else {
+        setSuccess(emailInput);
+        isValid = true;
+      }
+
+      return isValid;
+    };
+
+    const checkPostalCode = () => {
+      let isValid = false;
+      const postalCode = postalCodeInput.value.trim();
+      const regex = /^[0-9]{5}$/;
+
+      if (isEmpty(postalCode)) {
+        setError(postalCodeInput, "Postal code cannot be empty");
+      } else if (isNotValid(regex, postalCode)) {
+        setError(postalCodeInput, "Postal code must be 5 digits long");
+      } else {
+        setSuccess(postalCodeInput);
+        isValid = true;
+      }
+
+      return isValid;
+    };
+
+    const checkPhone = () => {
+      let isValid = false;
+      const phone = phoneInput.value.trim();
+      const regex = /^[0-9]{9}$/;
+
+      if (isEmpty(phone)) {
+        setError(phoneInput, "Phone number cannot be empty");
+      } else if (isNotValid(regex, phone)) {
+        setError(phoneInput, "Phone number must be 9 digits long");
+      } else {
+        setSuccess(phoneInput);
+        isValid = true;
+      }
+
+      return isValid;
+    };
+
+    const checkCreditCard = () => {
+      let isValid = false;
+      const creditCard = creditCardInput.value.trim();
+      const regex = /^[0-9]{16}$/;
+
+      if (isEmpty(creditCard)) {
+        setError(creditCardInput, "Credit card number cannot be empty");
+      } else if (isNotValid(regex, creditCard)) {
+        setError(creditCardInput, "Credit card number must be 16 digits long");
+      } else {
+        setSuccess(creditCardInput);
+        isValid = true;
+      }
+
+      return isValid;
+    };
+
+    const checkCVV = () => {
+      let isValid = false;
+      const CVV = cvvInput.value.trim();
+      const regex = /^[0-9]{3}$/;
+
+      if (isEmpty(CVV)) {
+        setError(cvvInput, "Security code cannot be empty");
+      } else if (isNotValid(regex, CVV)) {
+        setError(cvvInput, "Security code must be 3 digits long");
+      } else {
+        setSuccess(cvvInput);
+        isValid = true;
+      }
+
+      return isValid;
+    };
+
+    const checkExpDate = () => {
+      let isValid = false;
+      const expDate = expDateInput.value.trim();
+      const regex = /^[0-9]{2}\/[0-9]{2}$/;
+
+      if (isEmpty(expDate)) {
+        setError(expDateInput, "Expiration date cannot be empty");
+      } else if (isNotValid(regex, expDate)) {
+        setError(expDateInput, "Invalid syntax. Expected format: 09/05");
+      } else {
+        setSuccess(expDateInput);
+        isValid = true;
+      }
+
+      return isValid;
+    };
+
+
+    // HELPER FUNCTIONS
+    const isEmpty = inputValue => (!inputValue.length ? true : false);
+    const isNotValid = (regex, email) => !regex.test(email);
+
+
+    // STYLE FUNCTIONS
+    const setError = (input, message) => {
+      const inputGroup = input.parentElement;
+
+      inputGroup.classList.remove("input-group--success");
+      inputGroup.classList.add("input-group--error");
+
+      const error = inputGroup.querySelector("span");
+      error.innerText = message;
+    };
+
+    const setSuccess = input => {
+      const inputGroup = input.parentElement;
+
+      inputGroup.classList.remove("input-group--error");
+      inputGroup.classList.add("input-group--success");
+
+      const error = inputGroup.querySelector("span");
+      error.innerText = "";
+    };
+
+  </script>
 @end

@@ -58,7 +58,7 @@ Route.post("/order", async ({ request, response }) => {
     creditCard: schema.string({}, [rules.regex(new RegExp("^[0-9]{16}$"))]),
     CVV: schema.string({}, [rules.regex(new RegExp("^[0-9]{3}$"))]),
     expDate: schema.string({}, [
-      rules.regex(new RegExp("^[0-9]{2}/[0-9]{2}$")),
+      rules.regex(new RegExp("^[0-9]{2}\/[0-9]{2}$")),
     ]),
   });
 
