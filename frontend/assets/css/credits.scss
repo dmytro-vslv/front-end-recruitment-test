@@ -1,0 +1,153 @@
+.credits {
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  display: none;
+
+  &__button {
+    cursor: pointer;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 10;
+    background: none;
+    border: none;
+    outline: none;
+    font-size: 80px;
+    color: #fff;
+    opacity: 0;
+    animation: appear 1s linear 8s forwards;
+  }
+
+  &__wrapper {
+    width: 100%;
+    max-width: 800px;
+    height: fit-content;
+    padding: 0 15px;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: scrollUp 30s linear infinite;
+  }
+
+  &__message {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 400px;
+  }
+
+  &__message-title {
+    font-size: 40px;
+  }
+
+  &__message-text {
+    font-size: 35px;
+    line-height: 2;
+  }
+
+  &__title {
+    text-align: center;
+    font-size: 70px;
+    margin-bottom: 80px;
+  }
+
+  &__team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 80px;
+  }
+
+  &__member {
+    width: 100%;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &--honorable {
+      margin-top: 150px;
+    }
+  }
+
+  &__member-job {
+    margin-bottom: 5px;
+    font-size: 18px;
+  }
+
+  &__member-name {
+    font-size: 35px;
+    line-height: 1.2;
+  }
+
+  &--active {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .credits {
+    &__button {
+      font-size: 50px;
+      top: 5px;
+      right: 5px;
+    }
+
+    &__message {
+      font-size: 17px;
+      margin-bottom: 300px;
+    }
+
+    &__message-title {
+      font-size: 30px;
+    }
+
+    &__message-text {
+      font-size: 25px;
+    }
+
+    &__title {
+      margin-bottom: 60px;
+      font-size: 25px;
+    }
+
+    &__member-job {
+      margin-bottom: 5px;
+      font-size: 12px;
+    }
+
+    &__member-name {
+      font-size: 20px;
+    }
+  }
+}
+
+// ANIMATION
+@keyframes scrollUp {
+  0% {
+    top: 100%;
+  }
+
+  100% {
+    top: -240%;
+  }
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

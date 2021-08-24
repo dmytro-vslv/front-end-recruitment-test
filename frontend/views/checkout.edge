@@ -110,6 +110,58 @@
 
       </div>
     </div>
+
+
+    {{--  CREDITS  --}}
+    <div class="checkout__credits credits" id="credits">
+			<button class="credits__button" id="closeCreditsButton">&times;</button>
+
+			<div class="credits__wrapper">
+				<div class="credits__message">
+					<h3 class="credits__message-title">Hi There!</h3>
+					<p class="credits__message-text">Thanks for the challenge. It was fun, hehe. Looking forward to hearing from you. Any feedback is always appreciated! :)</p>
+				</div>
+
+				<h2 class="credits__title">Challenge completed by</h2>
+
+				<ul class="credits__team">
+					<li class="credits__member">
+						<span class="credits__member-job">Team Lead</span>
+						<span class="credits__member-name">Dmytro Vasyliev</span>
+					</li>
+          <li class="credits__member">
+						<span class="credits__member-job">Scrum Master</span>
+						<span class="credits__member-name">Dmytro Vasyliev</span>
+					</li>
+					<li class="credits__member">
+						<span class="credits__member-job">Front-end Developer</span>
+						<span class="credits__member-name">Dmytro Vasyliev</span>
+					</li>
+					<li class="credits__member">
+						<span class="credits__member-job">Back-end Developer</span>
+						<span class="credits__member-name">Dmytro Vasyliev</span>
+					</li>
+					<li class="credits__member">
+						<span class="credits__member-job">UX Designer</span>
+						<span class="credits__member-name">Dmytro Vasyliev</span>
+					</li>
+					<li class="credits__member">
+						<span class="credits__member-job">UI Designer (Not Really)</span>
+						<span class="credits__member-name">Dmytro Vasyliev</span>
+					</li>
+					<li class="credits__member">
+						<span class="credits__member-job">Quality Assurance Engineer</span>
+						<span class="credits__member-name">Dmytro Vasyliev</span>
+					</li>
+					<li class="credits__member credits__member--honorable">
+						<span class="credits__member-job">Honorable mentions</span>
+						<span class="credits__member-name">Dmytro Vasyliev</span>
+						<span class="credits__member-name">stackoverflow.com</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+
   </div>
 
   <script>
@@ -146,7 +198,7 @@
         if (timeoutId) {
           clearTimeout(timeoutId);
         }
-        console.log(...args);
+
         timeoutId = setTimeout(() => {
           fn.apply(null, args);
         }, delay);
@@ -178,7 +230,24 @@
         isExpDateValid;
 
       if (isFormValid) {
-        console.log("Form submitted");
+
+        const formData = new FormData(e.target);
+        const request = new Request("/order", {body: formData, method: "POST" });
+
+        fetch(request)
+          .then(res => res.json())
+          .then(data => {
+            if(data.message !== undefined) { 
+              alert(data.message);
+              showCredits();
+            } else {
+              alert("Something went wrong. Please try again.");
+            }
+          })
+          .catch(error => { 
+            console.log(error);
+            alert(error.message);
+          }); 
       }
     });
 
@@ -385,6 +454,23 @@
       const error = inputGroup.querySelector("span");
       error.innerText = "";
     };
+
+
+    // CREDITS
+    const credits = document.getElementById("credits");
+    const closeCreditsButton = document.getElementById("closeCreditsButton");
+
+    const showCredits = () => {
+      credits.classList.add("credits--active");
+      form.style.display = "none";
+    };
+
+    const closeCredits = () => {
+      credits.classList.remove("credits--active");
+      form.style.display = "flex";
+    };
+
+    closeCreditsButton.addEventListener("click", closeCredits);
 
   </script>
 @end

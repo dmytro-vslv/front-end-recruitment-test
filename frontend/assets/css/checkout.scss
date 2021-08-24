@@ -207,6 +207,15 @@ $font-extra-bold: 900;
     transform: translateX(-50%);
     z-index: 10;
   }
+
+  &__credits {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+  }
 }
 
 // INPUT GROUP
@@ -405,12 +414,12 @@ $font-extra-bold: 900;
 
     &__form {
       order: 2;
-      gap: 20px;
     }
 
     &__fieldset {
       display: flex;
       flex-direction: column;
+      gap: 25px;
     }
 
     &__receipt {
